@@ -4,7 +4,7 @@ import 'package:flutter_application_ecommerce/Model/Tools/JsonParse/product_pars
 abstract class HomeDataSource {
   Future<List<ProductEntity>> getProducts();
   Future<List<ProductEntity>> getProductsWithKeyWord(
-      {required String keyWord});
+      {required String? keyWord});
 }
 
 class HomeRemoteDataSource implements HomeDataSource {
@@ -19,7 +19,7 @@ class HomeRemoteDataSource implements HomeDataSource {
   }
 
   @override
-  Future<List<ProductEntity>> getProductsWithKeyWord({required String keyWord}) async {
+  Future<List<ProductEntity>> getProductsWithKeyWord({required String? keyWord}) async {
     final QuerySnapshot querySnapshot = await firestore.collection('products').where('name', isEqualTo: keyWord).get();
     return querySnapshot.docs.map((doc) => ProductEntity.fromJson(doc.data() as Map<String, dynamic>)).toList();
   }

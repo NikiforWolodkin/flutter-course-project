@@ -10,6 +10,6 @@ class HomeRepository implements HomeDataSource {
 
   @override
   Future<List<ProductEntity>> getProductsWithKeyWord(
-          {required String keyWord}) =>
+          {required String? keyWord}) =>
       dataSource.getProductsWithKeyWord(keyWord: keyWord);
 }
