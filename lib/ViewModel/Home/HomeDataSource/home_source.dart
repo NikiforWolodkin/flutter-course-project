@@ -3,8 +3,8 @@ import 'package:flutter_application_ecommerce/Model/Tools/JsonParse/product_pars
 
 abstract class HomeDataSource {
   Future<List<ProductEntity>> getProducts();
-  Future<List<ProductEntity>> getProductsWithKeyWord(
-      {required String? keyWord});
+  Future<List<ProductEntity>> searchProducts(
+      {String? keyWord, double? minPrice, double? maxPrice, String? category});
 }
 
 class HomeRemoteDataSource implements HomeDataSource {
@@ -19,8 +19,23 @@ class HomeRemoteDataSource implements HomeDataSource {
   }
 
   @override
-  Future<List<ProductEntity>> getProductsWithKeyWord({required String? keyWord}) async {
-    final QuerySnapshot querySnapshot = await firestore.collection('products').where('name', isEqualTo: keyWord).get();
+  Future<List<ProductEntity>> searchProducts({String? keyWord, double? minPrice, double? maxPrice, String? category}) async {
+    Query query = firestore.collection('products');
+
+    if (keyWord != null) {
+      query = query.where('name', isEqualTo: keyWord);
+    }
+    if (category != null) {
+      query = query.where('product_type', isEqualTo: category);
+    }
+    if (minPrice != null) {
+      query = query.where('price', isGreaterThanOrEqualTo: minPrice);
+    }
+    if (maxPrice != null) {
+      query = query.where('price', isLessThanOrEqualTo: maxPrice);
+    }
+
+    final QuerySnapshot querySnapshot = await query.get();
     return querySnapshot.docs.map((doc) => ProductEntity.fromJson(doc.data() as Map<String, dynamic>)).toList();
   }
 }

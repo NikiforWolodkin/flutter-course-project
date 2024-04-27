@@ -15,8 +15,8 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
           emit(SearchingScreen());
         } else if (event is SearchStart) {
           emit(SearchLoading());
-          final productList = await homeRepository.getProductsWithKeyWord(
-              keyWord: event.searchKeyWord);
+          final productList = await homeRepository.searchProducts(
+              keyWord: event.searchKeyWord, minPrice: event.minPrice, maxPrice: event.maxPrice, category: event.category);
           if (productList.isNotEmpty) {
             emit(SearchSuccess(productList: productList));
           } else {

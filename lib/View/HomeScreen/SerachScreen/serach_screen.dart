@@ -63,18 +63,6 @@ class _SearchScreenState extends State<SearchScreen> {
                     children: [
                       TextFormField(
                         style: textStyle.bodyNormal,
-                        validator: (value) {
-                          if (value!.isNotEmpty) {
-                            return null;
-                          } else {
-                            snackBar(
-                                title: "Name",
-                                message: "please type something...",
-                                textStyle: textStyle,
-                                colors: colors);
-                            return "";
-                          }
-                        },
                         controller: searchController,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.zero,
@@ -86,12 +74,14 @@ class _SearchScreenState extends State<SearchScreen> {
                       TextFormField(
                         style: textStyle.bodyNormal,
                         validator: (value) {
-                          if (value!.isNotEmpty) {
+                          if (value != null && value.isNotEmpty && double.tryParse(value) != null) {
+                            return null;
+                          } else if (value == null || value.isEmpty) {
                             return null;
                           } else {
                             snackBar(
                                 title: "Price",
-                                message: "please enter minimum price ...",
+                                message: "please enter a valid price ...",
                                 textStyle: textStyle,
                                 colors: colors);
                             return "";
@@ -108,12 +98,14 @@ class _SearchScreenState extends State<SearchScreen> {
                       TextFormField(
                         style: textStyle.bodyNormal,
                         validator: (value) {
-                          if (value!.isNotEmpty) {
+                          if (value != null && value.isNotEmpty && double.tryParse(value) != null) {
+                            return null;
+                          } else if (value == null || value.isEmpty) {
                             return null;
                           } else {
                             snackBar(
                                 title: "Price",
-                                message: "please enter maximum price ...",
+                                message: "please enter a valid price ...",
                                 textStyle: textStyle,
                                 colors: colors);
                             return "";
@@ -135,7 +127,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           hintText: selectedCategory ?? "Select a category...",
                           hintStyle: textStyle.bodyNormal,
                         ),
-                        items: <String>['Category 1', 'Category 2', 'Category 3']
+                        items: <String>['cat', 'mouse']
                             .map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
@@ -143,9 +135,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           );
                         }).toList(),
                         onChanged: (String? newValue) {
-                          setState(() {
-                            selectedCategory = newValue!;
-                          });
+                          selectedCategory = newValue!;
                         },
                       ),
                       ElevatedButton.icon(
@@ -157,10 +147,10 @@ class _SearchScreenState extends State<SearchScreen> {
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
                             searchBloc!.add(SearchStart(
-                                searchKeyWord: searchController.text,
-                                minPrice: minPriceController.text,
-                                maxPrice: maxPriceController.text,
-                                selectedCategory: selectedCategory));
+                                searchKeyWord: searchController.text == "" ? null : searchController.text,
+                                minPrice: double.tryParse(minPriceController.text),
+                                maxPrice: double.tryParse(maxPriceController.text),
+                                category: selectedCategory));
                           }
                         },
                       ),

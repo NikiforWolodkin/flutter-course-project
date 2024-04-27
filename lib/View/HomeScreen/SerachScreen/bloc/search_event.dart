@@ -7,9 +7,9 @@ class InitialSearchScreen extends SearchEvent {}
 
 class SearchStart extends SearchEvent {
   final String? searchKeyWord;
-  final String? minPrice;
-  final String? maxPrice;
-  final String? selectedCategory;
+  final double? minPrice;
+  final double? maxPrice;
+  final String? category;
 
-  SearchStart({required this.searchKeyWord, required this.minPrice, required this.maxPrice, required this.selectedCategory});
+  SearchStart({required this.searchKeyWord, required this.minPrice, required this.maxPrice, required this.category});
 }

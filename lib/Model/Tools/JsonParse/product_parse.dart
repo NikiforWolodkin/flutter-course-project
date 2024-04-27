@@ -9,7 +9,7 @@ class ProductEntity {
   @HiveField(1)
   final String name;
   @HiveField(2)
-  final String price;
+  final double price;
   @HiveField(3)
   final String imageUrl;
   @HiveField(4)
@@ -23,7 +23,7 @@ class ProductEntity {
   ProductEntity.fromJson(Map<String, dynamic> json)
     : id = json['id'] as int? ?? 0,
       name = json['name'] as String? ?? "",
-      price = json['price'] as String? ?? "",
+      price = double.tryParse(json['price'].toString()) ?? 0,
       imageUrl = json['image_link'] as String? ?? "",
       productType = json['product_type'] as String? ?? "",
       description = json['description'] as String? ?? "";

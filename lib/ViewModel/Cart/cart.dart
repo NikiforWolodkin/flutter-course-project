@@ -31,7 +31,7 @@ class CartFunctions {
     double equ = 0;
     String result;
     for (var element in productList) {
-      equ = equ + double.parse(element.price);
+      equ = equ + element.price;
     }
     result = equ.toString();
     return result;

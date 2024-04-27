@@ -8,7 +8,7 @@ part of 'order_entity.dart';
 
 class OrderEntityAdapter extends TypeAdapter<OrderEntity> {
   @override
-  final int typeId = 4;
+  final int typeId = 2;
 
   @override
   OrderEntity read(BinaryReader reader) {

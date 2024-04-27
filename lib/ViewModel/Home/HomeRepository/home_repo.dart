@@ -9,7 +9,7 @@ class HomeRepository implements HomeDataSource {
   Future<List<ProductEntity>> getProducts() => dataSource.getProducts();
 
   @override
-  Future<List<ProductEntity>> getProductsWithKeyWord(
-          {required String? keyWord}) =>
-      dataSource.getProductsWithKeyWord(keyWord: keyWord);
+  Future<List<ProductEntity>> searchProducts(
+          {String? keyWord, double? minPrice, double? maxPrice, String? category}) =>
+      dataSource.searchProducts(keyWord: keyWord, minPrice: minPrice, maxPrice: maxPrice, category: category);
 }
