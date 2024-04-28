@@ -1,8 +1,10 @@
 import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_application_ecommerce/Model/GetX/Controller/duplicate_controller.dart';
 import 'package:flutter_application_ecommerce/Model/GetX/Controller/profile_controller.dart';
 import 'package:flutter_application_ecommerce/Model/Tools/Color/color.dart';
@@ -10,6 +12,9 @@ import 'package:flutter_application_ecommerce/Model/Tools/Font/font.dart';
 import 'package:flutter_application_ecommerce/Model/Tools/JsonParse/product_parse.dart';
 import 'package:flutter_application_ecommerce/Model/Widget/widget.dart';
 import 'package:flutter_application_ecommerce/View/CartScreen/cart_screen.dart';
+import 'package:flutter_application_ecommerce/View/HomeScreen/AddProductScreen/add_product_screen.dart';
+import 'package:flutter_application_ecommerce/View/HomeScreen/bloc/home_bloc.dart';
+import 'package:flutter_application_ecommerce/View/HomeScreen/home_screen.dart';
 import 'package:flutter_application_ecommerce/ViewModel/Cart/cart.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
@@ -34,6 +39,24 @@ class _DetailScreenState extends State<DetailScreen> {
     final profileFunctions = profileController.profileFunctions;
     final bool isInFavorite =
         profileFunctions.isInFavoriteBox(productEntity: widget.productEntity);
+
+    Future<void> deleteProduct(int id) async {
+      final collection = FirebaseFirestore.instance.collection('products');
+      
+      // Find the document with the matching id
+      final querySnapshot = await collection.where('id', isEqualTo: id).get();
+
+      // Firestore should only return one document with the unique id
+      for (var doc in querySnapshot.docs) {
+        await doc.reference.delete();
+      }
+
+      homeBloc?.add(HomeStart());
+
+      Get.to(HomeScreen());
+
+      print('Product with ID: $id deleted successfully');
+    }
 
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -208,6 +231,45 @@ class _DetailScreenState extends State<DetailScreen> {
                         "€${widget.productEntity.price}",
                         style: textStyle.titleLarge
                             .copyWith(color: colors.primary),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0,20,0,20),
+                            child: CircleAvatar(
+                              backgroundColor: colors.gray,
+                              child: IconButton(
+                                highlightColor: colors.whiteColor,
+                                splashColor: colors.whiteColor,
+                                icon: Icon(
+                                        CupertinoIcons.trash,
+                                        color: colors.blackColor,
+                                      ),
+                                onPressed: () async {
+                                  await deleteProduct(widget.productEntity.id);
+                                },
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15,20,20,20),
+                            child: CircleAvatar(
+                              backgroundColor: colors.gray,
+                              child: IconButton(
+                                highlightColor: colors.whiteColor,
+                                splashColor: colors.whiteColor,
+                                icon: Icon(
+                                        CupertinoIcons.pen,
+                                        color: colors.blackColor,
+                                      ),
+                                onPressed: () async {
+                                  Get.to(AddProductPage());
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(
                         height: 15,
