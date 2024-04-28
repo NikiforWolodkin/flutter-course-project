@@ -9,6 +9,7 @@ import 'package:flutter_application_ecommerce/Model/Tools/Constant/const.dart';
 import 'package:flutter_application_ecommerce/Model/Tools/Font/font.dart';
 import 'package:flutter_application_ecommerce/Model/Tools/JsonParse/product_parse.dart';
 import 'package:flutter_application_ecommerce/Model/Widget/widget.dart';
+import 'package:flutter_application_ecommerce/View/HomeScreen/AddProductScreen/add_product_screen.dart';
 import 'package:flutter_application_ecommerce/View/HomeScreen/SerachScreen/serach_screen.dart';
 import 'package:flutter_application_ecommerce/View/HomeScreen/ShopScreen/shop_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -113,7 +114,17 @@ class _HomeScreenState extends State<HomeScreen>
                               "Application license",
                               style: textStyle.bodyNormal,
                             ),
-                          ))
+                          )),
+                          PopupMenuItem(
+                              child: TextButton(
+                            onPressed: () {
+                              Get.to(AddProductPage());
+                            },
+                            child: Text(
+                              "Add product",
+                              style: textStyle.bodyNormal,
+                            ),
+                          )),
                         ]);
                   },
                 ),
@@ -218,5 +229,5 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   @override
-  bool get wantKeepAlive => true;
+  bool get wantKeepAlive => false;
 }

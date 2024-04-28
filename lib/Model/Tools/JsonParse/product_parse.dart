@@ -27,4 +27,15 @@ class ProductEntity {
       imageUrl = json['image_link'] as String? ?? "",
       productType = json['product_type'] as String? ?? "",
       description = json['description'] as String? ?? "";
+
+  Map<String, dynamic> toDocument() {
+    return {
+      'id': id,
+      'name': name,
+      'price': price,
+      'image_link': imageUrl,
+      'product_type': productType,
+      'description': description,
+    };
+  }
 }
