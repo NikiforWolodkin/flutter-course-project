@@ -14,12 +14,16 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
 
-class AddProductPage extends StatefulWidget {
+class UpdateProductPage extends StatefulWidget {
+  final ProductEntity product;
+
+  UpdateProductPage({required this.product});
+
   @override
-  _AddProductPageState createState() => _AddProductPageState();
+  _UpdateProductPageState createState() => _UpdateProductPageState();
 }
 
-class _AddProductPageState extends State<AddProductPage> {
+class _UpdateProductPageState extends State<UpdateProductPage> {
   final _formKey = GlobalKey<FormState>();
   final ImagePicker _picker = ImagePicker();
   final duplicateController = Get.find<DuplicateController>();
@@ -32,6 +36,16 @@ class _AddProductPageState extends State<AddProductPage> {
   String price = '';
   String category = '';
 
+  @override
+  void initState() {
+    super.initState();
+    id = widget.product.id.toString();
+    name = widget.product.name;
+    description = widget.product.description;
+    price = widget.product.price.toString();
+    category = widget.product.productType;
+  }
+
   Future<void> uploadImage() async {
     // Select an image from the gallery
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
@@ -41,7 +55,7 @@ class _AddProductPageState extends State<AddProductPage> {
     });
   }
 
-  Future<void> addProduct() async {
+  Future<void> updateProduct() async {
     if (!_formKey.currentState!.validate()) {
       snackBar(
         title: "Form Validation",
@@ -75,27 +89,27 @@ class _AddProductPageState extends State<AddProductPage> {
       // Check if product with provided id already exists
       var docs = await products.where('id', isEqualTo: int.parse(id)).get();
       if (docs.size > 0) {
+        // Update the existing product
+        products.doc(docs.docs[0].id).update(product.toDocument());
+        snackBar(
+          title: "Product Update",
+          message: "Product with provided ID has been updated.",
+          textStyle: textStyle,
+          colors: colors
+        );
+      } else {
         snackBar(
           title: "Product ID",
-          message: "Product with provided ID already exists.",
+          message: "No product with provided ID exists.",
           textStyle: textStyle,
           colors: colors
         );
         return;
       }
 
-      products.add(product.toDocument());
-
       homeBloc?.add(HomeStart());
 
       Get.to(HomeScreen());
-
-      snackBar(
-          title: "Product added",
-          message: "Product with provided ID has been added.",
-          textStyle: textStyle,
-          colors: colors
-        );
     } else {
       snackBar(
         title: "Image Selection",
@@ -104,9 +118,7 @@ class _AddProductPageState extends State<AddProductPage> {
         colors: colors
       );
     }
-
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -121,6 +133,7 @@ class _AddProductPageState extends State<AddProductPage> {
           child: Column(
             children: <Widget>[
               TextFormField(
+                initialValue: widget.product.id.toString(),
                 style: textStyle.bodyNormal,
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.zero,
@@ -144,6 +157,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 },
               ),
               TextFormField(
+                initialValue: widget.product.name,
                 style: textStyle.bodyNormal,
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.zero,
@@ -164,6 +178,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 },
               ),
               TextFormField(
+                initialValue: widget.product.description,
                 style: textStyle.bodyNormal,
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.zero,
@@ -184,6 +199,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 },
               ),
               TextFormField(
+                initialValue: widget.product.price.toString(),
                 style: textStyle.bodyNormal,
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.zero,
@@ -207,6 +223,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 },
               ),
               TextFormField(
+                initialValue: widget.product.productType,
                 style: textStyle.bodyNormal,
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.zero,
@@ -252,7 +269,7 @@ class _AddProductPageState extends State<AddProductPage> {
                   width: double.infinity,
                   child: ElevatedButton.icon(
                     icon: const Icon(Icons.upload, color: Colors.white),
-                    label: Text('Add product', style: textStyle.bodyNormal.copyWith(color: CustomColors().whiteColor)),
+                    label: Text('Update product', style: textStyle.bodyNormal.copyWith(color: CustomColors().whiteColor)),
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(CustomColors().primary),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -261,7 +278,7 @@ class _AddProductPageState extends State<AddProductPage> {
                         ),
                       ),
                     ),
-                    onPressed: addProduct,
+                    onPressed: updateProduct,
                   ),
                 ),
               ),

@@ -138,11 +138,17 @@ class _SearchScreenState extends State<SearchScreen> {
                           selectedCategory = newValue!;
                         },
                       ),
+                      Container(height: 10),
                       ElevatedButton.icon(
                         icon: const Icon(Icons.search, color: Colors.white),
                         label: Text('Search', style: textStyle.bodyNormal.copyWith(color: colors.whiteColor)),
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(CustomColors().primary),
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                          ),
                         ),
                         onPressed: () {
                           if (formKey.currentState!.validate()) {

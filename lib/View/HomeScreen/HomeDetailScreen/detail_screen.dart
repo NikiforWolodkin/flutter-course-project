@@ -13,6 +13,7 @@ import 'package:flutter_application_ecommerce/Model/Tools/JsonParse/product_pars
 import 'package:flutter_application_ecommerce/Model/Widget/widget.dart';
 import 'package:flutter_application_ecommerce/View/CartScreen/cart_screen.dart';
 import 'package:flutter_application_ecommerce/View/HomeScreen/AddProductScreen/add_product_screen.dart';
+import 'package:flutter_application_ecommerce/View/HomeScreen/AddProductScreen/update_product_screen.dart';
 import 'package:flutter_application_ecommerce/View/HomeScreen/bloc/home_bloc.dart';
 import 'package:flutter_application_ecommerce/View/HomeScreen/home_screen.dart';
 import 'package:flutter_application_ecommerce/ViewModel/Cart/cart.dart';
@@ -131,8 +132,8 @@ class _DetailScreenState extends State<DetailScreen> {
                     color: colors.blackColor,
                   ),
                   onPressed: () {
-                    Share.shareWithResult("https://github.com/EmirBashiri",
-                        subject: "Developer github profile");
+                    Share.shareWithResult(widget.productEntity.name,
+                        subject: "Product");
                   },
                 ),
               )
@@ -253,7 +254,7 @@ class _DetailScreenState extends State<DetailScreen> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(15,20,20,20),
+                            padding: const EdgeInsets.fromLTRB(15,20,15,20),
                             child: CircleAvatar(
                               backgroundColor: colors.gray,
                               child: IconButton(
@@ -264,7 +265,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                         color: colors.blackColor,
                                       ),
                                 onPressed: () async {
-                                  Get.to(AddProductPage());
+                                  Get.to(UpdateProductPage(product: widget.productEntity));
                                 },
                               ),
                             ),
