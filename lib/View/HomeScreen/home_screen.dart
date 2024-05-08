@@ -93,31 +93,6 @@ class _HomeScreenState extends State<HomeScreen>
                           PopupMenuItem(
                               child: TextButton(
                             onPressed: () {
-                              Get.back();
-                              launchUrl(
-                                Uri.parse(developerGithub),
-                                mode: LaunchMode.externalApplication,
-                              );
-                            },
-                            child: Text(
-                              "Developer Github page",
-                              style: textStyle.bodyNormal,
-                            ),
-                          )),
-                          PopupMenuItem(
-                              child: TextButton(
-                            onPressed: () {
-                              Get.back();
-                              showLicensePage(context: context);
-                            },
-                            child: Text(
-                              "Application license",
-                              style: textStyle.bodyNormal,
-                            ),
-                          )),
-                          PopupMenuItem(
-                              child: TextButton(
-                            onPressed: () {
                               Get.to(AddProductPage());
                             },
                             child: Text(
