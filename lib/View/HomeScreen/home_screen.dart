@@ -31,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen>
     with AutomaticKeepAliveClientMixin {
   final duplicateController = Get.find<DuplicateController>();
   final homeController = Get.find<HomeController>();
+  final profileController = Get.find<ProfileController>();
   final getContext = Get.context!;
   @override
   void initState() {
@@ -86,21 +87,38 @@ class _HomeScreenState extends State<HomeScreen>
                   ),
                   onPressed: () {
                     showMenu(
-                        color: colors.gray,
-                        context: context,
-                        position: RelativeRect.fill,
-                        items: [
-                          PopupMenuItem(
-                              child: TextButton(
-                            onPressed: () {
-                              Get.to(AddProductPage());
+                      color: colors.gray,
+                      context: context,
+                      position: RelativeRect.fill,
+                      items: [
+                        PopupMenuItem(
+                          child: FutureBuilder<bool>(
+                            future: profileController.authenticationFunctions.isAdmin(),
+                            builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                              if (snapshot.connectionState == ConnectionState.done) {
+                                if (snapshot.hasError) {
+                                  return Text('Error: ${snapshot.error}');
+                                } else if (snapshot.hasData && snapshot.data == true) {
+                                  return TextButton(
+                                    onPressed: () {
+                                      Get.to(AddProductPage());
+                                    },
+                                    child: Text(
+                                      "Add product",
+                                      style: textStyle.bodyNormal,
+                                    ),
+                                  );
+                                } else {
+                                  return const SizedBox.shrink(); // Empty widget
+                                }
+                              } else {
+                                return const CircularProgressIndicator(); // Loading indicator
+                              }
                             },
-                            child: Text(
-                              "Add product",
-                              style: textStyle.bodyNormal,
-                            ),
-                          )),
-                        ]);
+                          ),
+                        ),
+                      ],
+                    );
                   },
                 ),
                 actions: [

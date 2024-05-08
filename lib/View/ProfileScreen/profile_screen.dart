@@ -204,7 +204,7 @@ class ProfileScreen extends StatelessWidget {
         );
       } else {
         return Text(
-          "Amir Bashiri",
+          "Profile",
           style: textStyle.titleLarge,
         );
       }
@@ -222,7 +222,7 @@ class ProfileScreen extends StatelessWidget {
         );
       } else {
         return Text(
-          "emirbashiri@gmail.com",
+          "Log in to edit your profile",
           style: textStyle.bodyNormal,
         );
       }

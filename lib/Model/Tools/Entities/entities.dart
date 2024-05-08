@@ -13,7 +13,7 @@ class HttpPackage {
 class UserInformation {
   final String name;
   final String userName;
-  final String password;
+  final String? password;
 
   UserInformation(
       {required this.userName, required this.password, required this.name});

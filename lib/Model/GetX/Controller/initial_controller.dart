@@ -35,7 +35,7 @@ class InitialController extends GetxController {
 
     bool remember = isRemember();
     if (remember) {
-      final perviousAccount =
+      final perviousAccount = await
           profileController.authenticationFunctions.getUserInformation();
       if (perviousAccount != null) {
         profileController.informationInstance.value = perviousAccount;

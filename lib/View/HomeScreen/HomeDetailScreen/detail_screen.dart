@@ -233,44 +233,59 @@ class _DetailScreenState extends State<DetailScreen> {
                         style: textStyle.titleLarge
                             .copyWith(color: colors.primary),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0,20,0,20),
-                            child: CircleAvatar(
-                              backgroundColor: colors.gray,
-                              child: IconButton(
-                                highlightColor: colors.whiteColor,
-                                splashColor: colors.whiteColor,
-                                icon: Icon(
-                                        CupertinoIcons.trash,
-                                        color: colors.blackColor,
+                      FutureBuilder<bool>(
+                        future: profileController.authenticationFunctions.isAdmin(),
+                        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                          if (snapshot.connectionState == ConnectionState.done) {
+                            if (snapshot.hasError) {
+                              return Text('Error: ${snapshot.error}');
+                            } else if (snapshot.hasData && snapshot.data == true) {
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(0,20,0,20),
+                                    child: CircleAvatar(
+                                      backgroundColor: colors.gray,
+                                      child: IconButton(
+                                        highlightColor: colors.whiteColor,
+                                        splashColor: colors.whiteColor,
+                                        icon: Icon(
+                                          CupertinoIcons.trash,
+                                          color: colors.blackColor,
+                                        ),
+                                        onPressed: () async {
+                                          await deleteProduct(widget.productEntity.id);
+                                        },
                                       ),
-                                onPressed: () async {
-                                  await deleteProduct(widget.productEntity.id);
-                                },
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(15,20,15,20),
-                            child: CircleAvatar(
-                              backgroundColor: colors.gray,
-                              child: IconButton(
-                                highlightColor: colors.whiteColor,
-                                splashColor: colors.whiteColor,
-                                icon: Icon(
-                                        CupertinoIcons.pen,
-                                        color: colors.blackColor,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(15,20,15,20),
+                                    child: CircleAvatar(
+                                      backgroundColor: colors.gray,
+                                      child: IconButton(
+                                        highlightColor: colors.whiteColor,
+                                        splashColor: colors.whiteColor,
+                                        icon: Icon(
+                                          CupertinoIcons.pen,
+                                          color: colors.blackColor,
+                                        ),
+                                        onPressed: () async {
+                                          Get.to(UpdateProductPage(product: widget.productEntity));
+                                        },
                                       ),
-                                onPressed: () async {
-                                  Get.to(UpdateProductPage(product: widget.productEntity));
-                                },
-                              ),
-                            ),
-                          ),
-                        ],
+                                    ),
+                                  ),
+                                ],
+                              );
+                            } else {
+                              return SizedBox.shrink(); // Empty widget
+                            }
+                          } else {
+                            return CircularProgressIndicator(); // Loading indicator
+                          }
+                        },
                       ),
                       const SizedBox(
                         height: 15,

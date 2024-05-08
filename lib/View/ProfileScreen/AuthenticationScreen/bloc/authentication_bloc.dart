@@ -42,11 +42,8 @@ class AuthenticationBloc
               duplicateController: duplicateController));
         } else if (event is AuthenticatioLogin) {
           emit(AuthenticationLoading());
-          final perviousAccount = profileFunctions.getUserInformation();
-          if (perviousAccount != null) {
-            await profileFunctions.saveRemember(remember: event.isRemember);
-            bool isLogin = profileFunctions.loginUser(
-                pI: perviousAccount,
+          await profileFunctions.saveRemember(remember: event.isRemember);
+            bool isLogin = await profileFunctions.loginUser(
                 i: UserInformation(
                     userName: event.userName,
                     password: event.password,
@@ -59,12 +56,6 @@ class AuthenticationBloc
                   profileController: profileController,
                   duplicateController: duplicateController));
             }
-          } else {
-            emit(UserHaveNoAccount());
-            emit(AuthenticationLoginScreen(
-                profileController: profileController,
-                duplicateController: duplicateController));
-          }
         } else if (event is AuthenticationSignUp) {
           emit(AuthenticationLoading());
 
@@ -76,6 +67,10 @@ class AuthenticationBloc
                   name: event.name));
           if (isSign) {
             emit(SignSuccess());
+          } else {
+            emit(AuthenticationSignUpScreen(
+                profileController: profileController,
+                duplicateController: duplicateController));
           }
         } else if (event is AuthenticationChangeInformation) {
           emit(ChangeInformation());
