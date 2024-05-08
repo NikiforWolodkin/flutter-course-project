@@ -58,6 +58,7 @@ class AuthenticationFunctions {
         UserInformation(name: "", userName: "", password: "");
     profileController.rememberMeStatusInstance.value = false;
     profileController.isLoginInstanse.value = false;
+    profileController.profileFunctions.deleteImageFromStorage();
     return true;
   }
 
@@ -66,6 +67,7 @@ class AuthenticationFunctions {
     if (!await saveInformation(information: information)) {
       return false;
     }
+    await profileController.profileFunctions.downloadUserImage();
     profileController.informationInstance.value = information;
     profileController.isLoginInstanse.value = true;
     return true;
@@ -83,6 +85,8 @@ class AuthenticationFunctions {
       final profileController = Get.find<ProfileController>();
       profileController.informationInstance.value = (await getUserInformation())!;
       profileController.isLoginInstanse.value = true;
+
+      await profileController.profileFunctions.downloadUserImage();
 
       return true;
     } on FirebaseAuthException catch (e) {
