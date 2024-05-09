@@ -161,125 +161,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Shipping Address",
-                            style: textStyle.titleLarge,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.all(12),
-                            margin: const EdgeInsets.only(top: 25, bottom: 15),
-                            width: Get.mediaQuery.size.width,
-                            decoration: BoxDecoration(
-                                color: colors.gray,
-                                borderRadius: BorderRadius.circular(15)),
-                            child: Row(
-                              children: [
-                                LottieBuilder.network(
-                                  locationLottie,
-                                  fit: BoxFit.cover,
-                                  alignment: Alignment.centerLeft,
-                                  width: 80,
-                                  height: 80,
-                                ),
-                                const SizedBox(
-                                  width: 15,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "your address",
-                                        style: textStyle.bodyNormal.copyWith(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      addresList.isNotEmpty
-                                          ? SizedBox(
-                                              width: Get.width * 0.45,
-                                              height: 50,
-                                              child: DropdownButtonFormField2(
-                                                decoration: InputDecoration(
-                                                    hintText:
-                                                        "Select an address",
-                                                    hintStyle:
-                                                        textStyle.bodySmall),
-                                                dropdownDecoration:
-                                                    dropDownDecoration(),
-                                                isExpanded: true,
-                                                dropdownWidth: Get.width * 0.6,
-                                                items: addresList,
-                                                onChanged: (value) {
-                                                  addressDetail = value;
-                                                },
-                                              ),
-                                            )
-                                          : Text(
-                                              "you don't have any address",
-                                              style: textStyle.bodySmall,
-                                            ),
-                                    ],
-                                  ),
-                                ),
-                                addressEditButton(
-                                    callback: () {
-                                      showCupertinoDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return CupertinoAlertDialog(
-                                            title: Text(
-                                              "Address",
-                                              style: textStyle.bodyNormal,
-                                            ),
-                                            content: const Text(""),
-                                            actions: [
-                                              CupertinoButton(
-                                                child: const Text(
-                                                  "Edit address",
-                                                ),
-                                                onPressed: () {
-                                                  Get.until(
-                                                      (route) => route.isFirst);
-                                                  Get.to(const AddressScreen(),
-                                                      curve: Curves
-                                                          .easeInToLinear);
-                                                },
-                                              ),
-                                              CupertinoButton(
-                                                child: const Text(
-                                                  "Add new address",
-                                                ),
-                                                onPressed: () {
-                                                  Get.back();
-                                                  checkoutBloc!.add(
-                                                      CheckoutGetUserAddress());
-                                                },
-                                              ),
-                                              CupertinoButton(
-                                                child: const Text(
-                                                  "Cancel",
-                                                ),
-                                                onPressed: () {
-                                                  Get.back();
-                                                },
-                                              )
-                                            ],
-                                          );
-                                        },
-                                      );
-                                    },
-                                    colors: colors,
-                                    textStyle: textStyle)
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 15),
-                            child: Divider(
-                              color: colors.captionColor,
-                              thickness: 1,
-                            ),
-                          ),
-                          Text(
                             "Order List",
                             style: textStyle.titleLarge,
                           ),
@@ -317,7 +198,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     callback: () {
                       final isLogin = profileController.islogin;
                       if (isLogin) {
-                        if (addressDetail.isNotEmpty) {
+                        if (true) {
                           Get.to(PaymentScreen(
                             totalPrice: widget.totalPrice,
                             productList: widget.productList,

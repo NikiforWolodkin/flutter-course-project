@@ -14,6 +14,6 @@ class OrderEntity {
 
   OrderEntity(
       {required this.productList,
-      required this.totalPrice,
-      required this.time});
+       required this.totalPrice,
+       required this.time});
 }

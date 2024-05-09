@@ -33,7 +33,6 @@ class _RootScreenState extends State<RootScreen> with WidgetsBindingObserver {
 
   @override
   void dispose() {
-    duplicateController.dispose();
     super.dispose();
   }
 

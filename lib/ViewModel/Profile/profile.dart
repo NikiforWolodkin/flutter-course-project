@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_application_ecommerce/Model/GetX/Controller/profile_controller.dart';
+import 'package:flutter_application_ecommerce/Model/Tools/Entities/entities.dart';
 import 'package:flutter_application_ecommerce/Model/Tools/JsonParse/product_parse.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -128,6 +129,26 @@ class ProfileFunctions {
     }
   }
 
+  Future<void> updateUserName(String newName) async {
+    final ProfileController profileController = Get.find<ProfileController>();
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      CollectionReference users = FirebaseFirestore.instance.collection('users');
+      profileController.informationInstance.value = 
+        UserInformation(userName: profileController.informationInstance.value.userName, 
+                        password: profileController.informationInstance.value.password, 
+                        name: newName);
+      return users
+        .doc(user.uid)
+        .update({'fullName': newName})
+        .then((value) => print("User Name Updated"))
+        .catchError((error) => print("Failed to update user: $error"));
+    } else {
+      print("No user is logged in.");
+    }
+  }
+
   Future<void> openFavoriteBox() async {
     await Hive.openBox<ProductEntity>(favoriteBox);
   }
@@ -135,7 +156,36 @@ class ProfileFunctions {
   Future<bool> addToFavorite({required ProductEntity productEntity}) async {
     final box = Hive.box<ProductEntity>(favoriteBox);
     await box.put(productEntity.id, productEntity);
+
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      CollectionReference userFavorites = FirebaseFirestore.instance.collection('users').doc(user.uid).collection('favorites');
+      await userFavorites.doc(productEntity.id.toString()).set(productEntity.toDocument());
+    }
+
     return true;
+  }
+
+  Future<void> refreshFavorites() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final box = Hive.box<ProductEntity>(favoriteBox);
+      await box.clear();
+
+      CollectionReference userFavorites = FirebaseFirestore.instance.collection('users').doc(user.uid).collection('favorites');
+      QuerySnapshot snapshot = await userFavorites.get();
+      for (var doc in snapshot.docs) {
+        ProductEntity productEntity = ProductEntity.fromJson(doc.data() as Map<String, dynamic>);
+        await box.put(productEntity.id, productEntity);
+      }
+    } else {
+      print("No user is logged in.");
+    }
+  }
+
+  Future<void> clearDB() async {
+    final box = Hive.box<ProductEntity>(favoriteBox);
+    await box.clear();
   }
 
   Future<List<ProductEntity>> getFavoriteProducts() async {
@@ -161,6 +211,13 @@ class ProfileFunctions {
   Future<bool> removeFavorite({required ProductEntity productEntity}) async {
     final box = Hive.box<ProductEntity>(favoriteBox);
     await box.delete(productEntity.id);
+
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      CollectionReference userFavorites = FirebaseFirestore.instance.collection('users').doc(user.uid).collection('favorites');
+      await userFavorites.doc(productEntity.id.toString()).delete();
+    }
+    
     return true;
   }
 

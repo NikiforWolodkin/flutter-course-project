@@ -59,6 +59,7 @@ class AuthenticationFunctions {
     profileController.rememberMeStatusInstance.value = false;
     profileController.isLoginInstanse.value = false;
     profileController.profileFunctions.deleteImageFromStorage();
+    profileController.profileFunctions.clearDB();
     return true;
   }
 
@@ -68,6 +69,7 @@ class AuthenticationFunctions {
       return false;
     }
     await profileController.profileFunctions.downloadUserImage();
+    profileController.profileFunctions.refreshFavorites();
     profileController.informationInstance.value = information;
     profileController.isLoginInstanse.value = true;
     return true;
@@ -87,6 +89,7 @@ class AuthenticationFunctions {
       profileController.isLoginInstanse.value = true;
 
       await profileController.profileFunctions.downloadUserImage();
+      profileController.profileFunctions.refreshFavorites();
 
       return true;
     } on FirebaseAuthException catch (e) {

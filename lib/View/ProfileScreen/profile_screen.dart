@@ -67,6 +67,7 @@ class ProfileScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     profileName(
+                        context: context,
                         textStyle: textStyle,
                         profileController: profileController),
                     const SizedBox(
@@ -83,18 +84,6 @@ class ProfileScreen extends StatelessWidget {
                     Get.to(const FavoriteScreen());
                   },
                   itemName: "Favorites",
-                  textStyle: textStyle,
-                  colors: colors),
-              profileItem(
-                  callback: () {
-                    bool isLogin = profileController.islogin;
-                    if (isLogin) {
-                      Get.to(const AddressScreen());
-                    } else {
-                      loginRequiredDialog(textStyle: textStyle);
-                    }
-                  },
-                  itemName: "My Address",
                   textStyle: textStyle,
                   colors: colors),
               profileItem(
@@ -193,14 +182,42 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget profileName(
-      {required CustomTextStyle textStyle,
-      required ProfileController profileController}) {
+  Widget profileName({
+    required BuildContext context,
+    required CustomTextStyle textStyle,
+    required ProfileController profileController,
+  }) {
     return Obx(() {
       if (profileController.islogin) {
-        return Text(
-          profileController.information.name,
-          style: textStyle.titleLarge,
+        return GestureDetector(
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                TextEditingController _controller = TextEditingController(text: profileController.information.name);
+                return AlertDialog(
+                  title: Text('Edit Name'),
+                  content: TextField(
+                    controller: _controller,
+                    decoration: InputDecoration(hintText: "Enter new name"),
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                      child: Text('Update'),
+                      onPressed: () async {
+                        await profileController.profileFunctions.updateUserName(_controller.text);
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+          child: Text(
+            profileController.information.name,
+            style: textStyle.titleLarge,
+          ),
         );
       } else {
         return Text(

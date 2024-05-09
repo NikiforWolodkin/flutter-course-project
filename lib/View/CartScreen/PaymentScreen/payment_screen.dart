@@ -151,7 +151,7 @@ class PaymentScreen extends StatelessWidget {
                             child: Row(
                               children: [
                                 Text(
-                                  productList[0].name.substring(0, 10),
+                                  productList[0].name.substring(0, productList[0].name.length > 10 ? 10 : productList[0].name.length),
                                   style: textStyle.bodyNormal
                                       .copyWith(fontWeight: FontWeight.bold),
                                   overflow: TextOverflow.clip,
@@ -197,17 +197,6 @@ class PaymentScreen extends StatelessWidget {
                           ),
                           suffix: Text(
                             profileController.information.name,
-                            style: textStyle.bodyNormal
-                                .copyWith(fontWeight: FontWeight.bold),
-                          )),
-                      duplicateRowItem(
-                          colors: colors,
-                          prefix: Text(
-                            "Address",
-                            style: textStyle.bodyNormal,
-                          ),
-                          suffix: Text(
-                            addressDetail,
                             style: textStyle.bodyNormal
                                 .copyWith(fontWeight: FontWeight.bold),
                           )),
