@@ -163,14 +163,27 @@ class ProfileScreen extends StatelessWidget {
     return GetX<ProfileController>(
       builder: (controller) {
         if (controller.userSetImage) {
-          final File file = controller.profileFunctions.imageFile()!;
-          return ClipRRect(
-            borderRadius: BorderRadius.circular(49),
-            child: Image.file(
-              file,
-              fit: BoxFit.cover,
-            ),
-          );
+          File? file = null;
+          try {
+            file = controller.profileFunctions.imageFile()!;
+          } catch (e) {
+            print(e);
+          }
+          if (file != null && file.existsSync()) {
+            return ClipRRect(
+              borderRadius: BorderRadius.circular(49),
+              child: Image.file(
+                file,
+                fit: BoxFit.cover,
+              ),
+            );
+          } else {
+            return Icon(
+              CupertinoIcons.person_alt_circle,
+              color: colors.whiteColor,
+              size: 40,
+            );
+          }
         } else {
           return Icon(
             CupertinoIcons.person_alt_circle,

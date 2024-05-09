@@ -17,6 +17,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         if (event is HomeStart) {
           emit(HomeLoading());
           await profileController.profileFunctions.downloadUserImage();
+          profileController.isLoginInstanse = await profileController.authenticationFunctions.isUserLogin().obs;
+          if (profileController.islogin) {
+            profileController.informationInstance.value = (await profileController.authenticationFunctions.getUserInformation())!;
+          }
           final productList = await homeRepository.getProducts();
           emit.call(HomeSuccess(productList: productList));
         }

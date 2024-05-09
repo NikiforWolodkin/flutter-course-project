@@ -84,6 +84,8 @@ class ProfileFunctions {
   }
 
   Future<bool> downloadUserImage() async {
+    deleteImageFromStorage();
+
     final ProfileController profileController = Get.find<ProfileController>();
     final User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
