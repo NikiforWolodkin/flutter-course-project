@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_ecommerce/Model/GetX/Controller/duplicate_controller.dart';
 import 'package:flutter_application_ecommerce/Model/GetX/Controller/profile_controller.dart';
 import 'package:flutter_application_ecommerce/Model/Tools/Entities/entities.dart';
+import 'package:flutter_application_ecommerce/Model/Widget/widget.dart';
 import 'package:flutter_application_ecommerce/ViewModel/Profile/Authentication/authentication.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -15,6 +16,8 @@ class AuthenticationBloc
     on<AuthenticationEvent>((event, emit) async {
       final profileController = Get.find<ProfileController>();
       final duplicateController = Get.find<DuplicateController>();
+      final colors = duplicateController.colors;
+      final textStyle = duplicateController.textStyle;
       final AuthenticationFunctions profileFunctions =
           profileController.authenticationFunctions;
       try {
@@ -68,6 +71,11 @@ class AuthenticationBloc
           if (isSign) {
             emit(SignSuccess());
           } else {
+            snackBar(
+              title: "Unable to create account",
+              message: "please check the information you have provided",
+              textStyle: textStyle,
+              colors: colors);
             emit(AuthenticationSignUpScreen(
                 profileController: profileController,
                 duplicateController: duplicateController));

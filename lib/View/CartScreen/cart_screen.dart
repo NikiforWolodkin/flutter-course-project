@@ -46,7 +46,7 @@ class _CartScreenState extends State<CartScreen> {
             return DuplicateTemplate(
                 colors: colors,
                 textStyle: textStyle,
-                title:"Cart Screen",
+                title:"Cart",
                 child: Stack(
                     children: [
                       Positioned.fill(

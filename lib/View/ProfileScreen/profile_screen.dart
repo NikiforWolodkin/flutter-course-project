@@ -95,7 +95,7 @@ class ProfileScreen extends StatelessWidget {
                       loginRequiredDialog(textStyle: textStyle);
                     }
                   },
-                  itemName: "Order History",
+                  itemName: "Order history",
                   textStyle: textStyle,
                   colors: colors),
               Obx(
@@ -109,7 +109,7 @@ class ProfileScreen extends StatelessWidget {
                           builder: (context) {
                             return CupertinoAlertDialog(
                               title: Text(
-                                "Log Out",
+                                "Log out",
                                 style: textStyle.titleLarge
                                     .copyWith(color: colors.red),
                               ),
@@ -306,7 +306,7 @@ class ProfileScreen extends StatelessWidget {
     if (isLogin) {
       return "Log out";
     } else {
-      return "Login";
+      return "Log in";
     }
   }
 }

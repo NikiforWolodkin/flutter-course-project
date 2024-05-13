@@ -179,7 +179,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
             return DuplicateTemplate(
               colors: colors,
               textStyle: textStyle,
-              title: "Login",
+              title: "Log in",
               child: Column(
                 children: [
                   Expanded(
@@ -201,7 +201,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                                   height: 5,
                                 ),
                                 AutoSizeText(
-                                  "welcome back, we've been missed you",
+                                  "Welcome back!",
                                   style: textStyle.bodySmall,
                                   maxLines: 1,
                                 )
@@ -217,7 +217,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                               textStyle: textStyle,
                               controller: userNameController,
                               formKey: userNameKey,
-                              lable: "UserName or Email"),
+                              lable: "E-Mail"),
                           Obx(
                             () => textField(
                                 suffix: CupertinoButton(
@@ -239,44 +239,11 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                                 formKey: passwordKey,
                                 lable: "Password"),
                           ),
-                          Padding(
+                          const Padding(
                             padding: edgeInsets,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    Obx(
-                                      () => Checkbox(
-                                        activeColor: colors.primary,
-                                        value:
-                                            profileController.rememberMeStatus,
-                                        onChanged: (value) {
-                                          if (value != null) {
-                                            profileController
-                                                .rememberMeStatusInstance
-                                                .value = value;
-                                          }
-                                        },
-                                      ),
-                                    ),
-                                    Text(
-                                      "Remember me",
-                                      style: textStyle.bodySmall,
-                                    )
-                                  ],
-                                ),
-                                CupertinoButton(
-                                  child: Text(
-                                    "Forgat password?",
-                                    style: textStyle.bodyNormal,
-                                  ),
-                                  onPressed: () {
-                                    authenticationBloc!
-                                        .add(AuthenticationChangeInformation());
-                                  },
-                                ),
-                              ],
+                              children: [],
                             ),
                           ),
                           Padding(
@@ -287,7 +254,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                                 child: CupertinoButton.filled(
                                     borderRadius: BorderRadius.circular(20),
                                     child: Text(
-                                      "Login",
+                                      "Log in",
                                       style: textStyle.bodyNormal
                                           .copyWith(color: colors.whiteColor),
                                     ),
@@ -313,7 +280,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                       ),
                       CupertinoButton(
                         child: Text(
-                          "SignUp",
+                          "Sign up",
                           style: textStyle.bodyNormal.copyWith(
                               fontSize: 19,
                               decoration: TextDecoration.underline),
@@ -337,7 +304,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
             return DuplicateTemplate(
                 colors: colors,
                 textStyle: textStyle,
-                title: "Signup",
+                title: "Sign up",
                 child: Column(
                   children: [
                     Expanded(
@@ -352,7 +319,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   AutoSizeText(
-                                    "Let's sign you in",
+                                    "Create an account",
                                     style: textStyle.titleLarge,
                                     maxLines: 1,
                                   ),
@@ -360,7 +327,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                                     height: 5,
                                   ),
                                   AutoSizeText(
-                                    "welcome back, we've been missed you",
+                                    "Welcome!",
                                     style: textStyle.bodySmall,
                                     maxLines: 1,
                                   )
@@ -383,7 +350,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                                 textStyle: textStyle,
                                 controller: userNameController,
                                 formKey: userNameKey,
-                                lable: "UserName or Email"),
+                                lable: "E-Mail"),
                             Obx(
                               () => textField(
                                   suffix: CupertinoButton(
@@ -407,38 +374,13 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                             ),
                             Padding(
                               padding: edgeInsets,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Obx(
-                                    () => Checkbox(
-                                      activeColor: colors.primary,
-                                      value: profileController.rememberMeStatus,
-                                      onChanged: (value) {
-                                        if (value != null) {
-                                          profileController
-                                              .rememberMeStatusInstance
-                                              .value = value;
-                                        }
-                                      },
-                                    ),
-                                  ),
-                                  Text(
-                                    "Remember me",
-                                    style: textStyle.bodySmall,
-                                  )
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: edgeInsets,
                               child: CupertinoTheme(
                                   data: CupertinoThemeData(
                                       primaryColor: colors.primary),
                                   child: CupertinoButton.filled(
                                       borderRadius: BorderRadius.circular(20),
                                       child: Text(
-                                        "SignUp",
+                                        "Sign up",
                                         style: textStyle.bodyNormal
                                             .copyWith(color: colors.whiteColor),
                                       ),
@@ -473,7 +415,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                         ),
                         CupertinoButton(
                           child: Text(
-                            "Login",
+                            "Log in",
                             style: textStyle.bodyNormal.copyWith(
                                 fontSize: 19,
                                 decoration: TextDecoration.underline),

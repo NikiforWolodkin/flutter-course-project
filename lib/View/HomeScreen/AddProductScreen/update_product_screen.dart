@@ -124,7 +124,7 @@ class _UpdateProductPageState extends State<UpdateProductPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Product', style: textStyle.bodyNormal),
+        title: Text('Update Product', style: textStyle.bodyNormal),
       ),
       body: Form(
         key: _formKey,

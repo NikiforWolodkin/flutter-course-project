@@ -932,7 +932,7 @@ void loginRequiredDialog({required CustomTextStyle textStyle}) {
       context: Get.context!,
       builder: (context) => CupertinoAlertDialog(
             title: Text(
-              "Login",
+              "Log in",
               style: textStyle.titleLarge,
             ),
             content: Column(
@@ -943,7 +943,7 @@ void loginRequiredDialog({required CustomTextStyle textStyle}) {
                   height: 200,
                 ),
                 Text(
-                  "To continue to payment please login",
+                  "To continue please login",
                   style: textStyle.bodyNormal,
                   overflow: TextOverflow.clip,
                   textAlign: TextAlign.start,
@@ -966,7 +966,7 @@ void loginRequiredDialog({required CustomTextStyle textStyle}) {
                     Get.to(const AuthenticationScreen());
                   },
                   child: Text(
-                    "Login",
+                    "Log in",
                     style: textStyle.bodyNormal,
                   )),
             ],

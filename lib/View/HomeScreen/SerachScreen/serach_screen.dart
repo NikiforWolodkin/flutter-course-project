@@ -127,7 +127,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           hintText: selectedCategory ?? "Select a category...",
                           hintStyle: textStyle.bodyNormal,
                         ),
-                        items: <String>['cat', 'mouse']
+                        items: <String>['keyboard', 'mouse', 'phone', 'laptop', 'other', 'accessory']
                             .map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,

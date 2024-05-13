@@ -146,7 +146,7 @@ class _DetailScreenState extends State<DetailScreen> {
           backgroundColor: colors.whiteColor,
           centerTitle: true,
           title: Text(
-            "Product Detail",
+            "Product detail",
             style: textStyle.titleLarge,
           ),
           actions: [

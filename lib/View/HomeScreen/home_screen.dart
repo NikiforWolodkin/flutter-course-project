@@ -109,7 +109,13 @@ class _HomeScreenState extends State<HomeScreen>
                                     ),
                                   );
                                 } else {
-                                  return const SizedBox.shrink(); // Empty widget
+                                  return TextButton(
+                                    onPressed: () { },
+                                    child: Text(
+                                      "Become an admin",
+                                      style: textStyle.bodyNormal,
+                                    ),
+                                  );
                                 }
                               } else {
                                 return const CircularProgressIndicator(); // Loading indicator
