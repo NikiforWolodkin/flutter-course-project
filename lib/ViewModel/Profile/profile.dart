@@ -91,8 +91,15 @@ class ProfileFunctions {
     if (user != null) {
       final String? imagePath = await FirebaseFirestore.instance.collection('users').doc(user.uid).get().then((doc) => doc.data()?['imageUrl']);
       if (imagePath != null) {
+        Uri uri = Uri.parse(imagePath);
+        String imageName = uri.pathSegments.last.replaceAll("/", "");
+
         final Directory tempDir = Directory.systemTemp;
-        final File file = File('${tempDir.path}/tempImage.jpg');
+        final File file = File('${tempDir.path}/${imageName}');
+
+        if (await file.exists()) {
+          await file.delete();
+        }
 
         final Reference ref = FirebaseStorage.instance.refFromURL(imagePath);
         final DownloadTask task = ref.writeToFile(file);

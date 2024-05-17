@@ -87,10 +87,10 @@ class AuthenticationFunctions {
 
       // If the sign in was successful, update the profile controller
       final profileController = Get.find<ProfileController>();
+      await profileController.profileFunctions.downloadUserImage();
       profileController.informationInstance.value = (await getUserInformation())!;
       profileController.isLoginInstanse.value = true;
 
-      await profileController.profileFunctions.downloadUserImage();
       profileController.profileFunctions.refreshFavorites();
       profileController.orderFunctions.refreshOrders();
 

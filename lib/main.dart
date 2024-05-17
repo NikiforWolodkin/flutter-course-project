@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         Get.find<DuplicateController>().introFunctions.getLaunchStatus();
     return GetMaterialApp(
       initialBinding: InitialBinding(),
-      title: 'E-commerce X',
+      title: 'Tren Store',
       home: isFirst
           ? const IntroScreen()
           : const RootScreen(
