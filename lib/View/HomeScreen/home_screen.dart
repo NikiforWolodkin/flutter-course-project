@@ -110,7 +110,19 @@ class _HomeScreenState extends State<HomeScreen>
                                   );
                                 } else {
                                   return TextButton(
-                                    onPressed: () { },
+                                    onPressed: () async {
+                                      final Uri params = Uri(
+                                        scheme: 'mailto',
+                                        path: 'nikiforwolodkin@gmail.com',
+                                        query: 'subject=I want to become an admin',
+                                      );
+
+                                      if (await canLaunchUrl(params)) {
+                                        await launchUrl(params);
+                                      } else {
+                                        print('Could not launch $params');
+                                      }
+                                    },
                                     child: Text(
                                       "Become an admin",
                                       style: textStyle.bodyNormal,
