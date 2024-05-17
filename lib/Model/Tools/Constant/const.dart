@@ -13,7 +13,7 @@ const String loginLottie =
 const String emtySearchLottie =
     "https://assets9.lottiefiles.com/packages/lf20_wnqlfojb.json";
 
-const String developerGithub = "https://github.com/EmirBashiri";
+const String developerGithub = "https://github.com/nikiforwolodkin";
 
 const String emptyListLottie =
     "https://assets10.lottiefiles.com/packages/lf20_ysrn2iwp.json";

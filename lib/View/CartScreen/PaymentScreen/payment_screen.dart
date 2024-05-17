@@ -151,7 +151,9 @@ class PaymentScreen extends StatelessWidget {
                             child: Row(
                               children: [
                                 Text(
-                                  productList[0].name.substring(0, productList[0].name.length > 10 ? 10 : productList[0].name.length),
+                                  productList[0].name
+                                    .substring(0, productList[0].name.length > 8 ? 8 : productList[0].name.length)
+                                    + (productList[0].name.length > 8 ? "..." : ""),
                                   style: textStyle.bodyNormal
                                       .copyWith(fontWeight: FontWeight.bold),
                                   overflow: TextOverflow.clip,

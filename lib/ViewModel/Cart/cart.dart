@@ -33,7 +33,7 @@ class CartFunctions {
     for (var element in productList) {
       equ = equ + element.price;
     }
-    result = equ.toString();
+    result = equ.toStringAsFixed(2);
     return result;
   }
 

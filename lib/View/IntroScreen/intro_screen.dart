@@ -22,21 +22,21 @@ class _IntroScreenState extends State<IntroScreen> {
   late List<ContentConfig> contentList = [
     ContentConfig(
         backgroundColor: colors.primary,
-        title: "E-commerce X",
+        title: "World of products",
         description:
-            "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.",
+            "Discover a world of products at your fingertips, from the latest gadgets to the freshest groceries, all tailored to your preferences and needs.",
         pathImage: manImage),
     ContentConfig(
         backgroundColor: colors.primary,
-        title: "E-commerce X",
+        title: "Account",
         description:
-            "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.",
+            "Manage your account with ease, track your orders, and personalize your shopping experience for a seamless online retail journey.",
         pathImage: aboutImage),
     ContentConfig(
         backgroundColor: colors.primary,
-        title: "E-commerce X",
+        title: "Cart",
         description:
-            "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.",
+            "Your cart is just a tap away, making it simple to review your selections, make changes, and proceed to checkout whenever you’re ready. Happy shopping!",
         pathImage: contentImage)
   ];
   @override
