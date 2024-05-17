@@ -62,7 +62,7 @@ class _OrderScreenState extends State<OrderScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Order : ${order.productList[0].id}",
+                                "Order:",
                                 style: textStyle.bodyNormal,
                               ),
                               CupertinoButton(

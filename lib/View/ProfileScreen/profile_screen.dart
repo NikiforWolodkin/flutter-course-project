@@ -129,7 +129,7 @@ class ProfileScreen extends StatelessWidget {
                                 ),
                                 CupertinoButton(
                                   child: Text(
-                                    "yes",
+                                    "Yes",
                                     style: textStyle.bodyNormal
                                         .copyWith(color: colors.red),
                                   ),
